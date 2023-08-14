@@ -59,7 +59,7 @@ function TablePage() {
             onChange={event => setEndDate(event.target.value)}
           />
         </label>
-        <button type="submit">Goo</button>
+        
         <label>
           Timeframe: 
           <select value={timeframe} onChange={event => setTimeframe(event.target.value)}>
@@ -80,7 +80,7 @@ function TablePage() {
           </select>
         </label>
         <label>
-           Sort by:  
+           Sort by Bitstamp:  
           <select value={sortByBitstamp} onChange={event => setSortByBitstamp(event.target.value)}>
             <option value="datetime asc">datetime asc</option>
             <option value="datetime desc">datetime desc</option>
@@ -93,7 +93,7 @@ function TablePage() {
           </select>
         </label>
         <label>
-           Sort by:  
+           Sort by Kraken:  
           <select value={sortByKraken} onChange={event => setSortByKraken(event.target.value)}>
             <option value="datetime asc">datetime asc</option>
             <option value="datetime desc">datetime desc</option>
@@ -105,6 +105,7 @@ function TablePage() {
             <option value="difference desc">Difference desc</option>
           </select>
         </label>
+        <button type="submit"> LETS DO IT </button>
       </form>
       <div style={{ display: 'flex' }}>
       <div style={{ flex: 1 }}>

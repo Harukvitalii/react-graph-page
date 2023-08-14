@@ -62,7 +62,7 @@ function GraphPage() {
   const [data, setData] = useState(null);
   const [startDate, setStartDate] = useState("2023-07-30T10:00:00.000Z");
   const [endDate, setEndDate] = useState("2023-08-31T10:00:00.000Z");
-  const [timeframe, setTimeframe] = useState("30 seconds");
+  const [timeframe, setTimeframe] = useState("5 min");
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -93,30 +93,12 @@ function GraphPage() {
   if (data === null) {
     return <div>Loading ^ ^ ...</div>;
   }
-  const whitebitPrices = data.flatMap(infos => infos.filter(info => info.exchange === 'whitebit').map(item => 10*item.price.toFixed(5)));
-  const bitstampPrices = data.flatMap(infos => infos.filter(info => info.exchange === 'bitstamp').map(item => 10*item.price.toFixed(5)));
-  const krakenPrices = data.flatMap(infos => infos.filter(info => info.exchange === 'kraken').map(item => 10*item.price.toFixed(5)));
+  console.log(data)
+  const whitebitBitstampDifference = data.map(record => parseFloat(record.diffWhiteBitstamp).toFixed(5))
+  const whitebitKrakenDifference   = data.map(record => parseFloat(record.diffWhiteKraken).toFixed(5))
+  const labels = data.map(record => record.datetime)
+  const whitebitWhitebitDifference = Array.from({ length: labels.length }, () => 0)
 
-  const whitebitBitstampDifference = [];
-  for (let i = 0; i < whitebitPrices.length && i < bitstampPrices.length; i++) {
-    const difference = calculatePercentageDifference(whitebitPrices[i], bitstampPrices[i]);
-    whitebitBitstampDifference.push(difference);
-  }
-
-  const whitebitKrakenDifference = [];
-  for (let i = 0; i < whitebitPrices.length && i < krakenPrices.length; i++) {
-    const difference = calculatePercentageDifference(whitebitPrices[i], krakenPrices[i]);
-    whitebitKrakenDifference.push(difference);
-  }
-  const whitebitWhitebitDifference = [];
-  for (let i = 0; i < whitebitPrices.length && i < whitebitPrices.length; i++) {
-    const difference = calculatePercentageDifference(whitebitPrices[i], whitebitPrices[i]);
-    whitebitWhitebitDifference.push(difference);
-  }
-
-  const labels = data.flatMap(infos => infos.filter(info => info.exchange === 'whitebit').map(item => item.addedAt));
-
-  console.log(whitebitPrices)
   const dataset = {
     labels,
     datasets: [
@@ -147,7 +129,6 @@ function GraphPage() {
 
       },
     ],
-
   };
   return (
     <div>
