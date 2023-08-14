@@ -69,12 +69,6 @@ function GraphPage() {
     fetchData();
   };
 
-  const calculatePercentageDifference = (oldValue, newValue) => {
-    const absoluteDifference = newValue - oldValue
-    const percentageDifference = (absoluteDifference / oldValue) * 100;
-    return percentageDifference;
-  }
-
   const fetchData = async () => {
     try {
       const response = await axios.get(`http://localhost:4444/graph/${startDate}/${endDate}/${timeframe}`);
