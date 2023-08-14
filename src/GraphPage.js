@@ -1,16 +1,19 @@
   import React, { useState, useEffect } from 'react';
   import axios from 'axios';
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-} from 'chart.js';
-import { Line } from 'react-chartjs-2';
+  import {
+    Chart as ChartJS,
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Legend,
+  } from 'chart.js';
+  import { Line } from 'react-chartjs-2';
+
+
+  import { host } from './localvars'
 
 ChartJS.register(
   CategoryScale,
@@ -71,7 +74,7 @@ function GraphPage() {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(`http://localhost:4444/graph/${startDate}/${endDate}/${timeframe}`);
+      const response = await axios.get(host + `/graph/${startDate}/${endDate}/${timeframe}`);
       const data = await response.data;
       setData(data);
       console.log(typeof data, data);

@@ -1,14 +1,15 @@
 // NewPage.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-
+import { host } from './localvars'
+console.log('host', host)
 
 function TablePage() {
   const [dataBitstamp, setDataBitstamp] = useState(null);
   const [dataKraken, setDataKraken] = useState(null);
   const [startDate, setStartDate] = useState("2023-07-30T10:00:00.000Z");
   const [endDate, setEndDate] = useState("2023-07-31T10:00:00.000Z");
-  const [timeframe, setTimeframe] = useState("10 min");
+  const [timeframe, setTimeframe] = useState("30 mins");
   const [sortByBitstamp, setSortByBitstamp] = useState("datetime");
   const [sortByKraken, setSortByKraken] = useState("datetime");
 
@@ -21,10 +22,10 @@ function TablePage() {
 
   const fetchData = async () => {
     try {
-      const rBit = await axios.get(`http://localhost:4444/table/${startDate}/${endDate}/${timeframe}/${sortByBitstamp}/bitstamp`);
+      const rBit = await axios.get(host + `/table/${startDate}/${endDate}/${timeframe}/${sortByBitstamp}/bitstamp`);
       const dataBitstamp = await rBit.data;
       setDataBitstamp(dataBitstamp);
-      const rKr = await axios.get(`http://localhost:4444/table/${startDate}/${endDate}/${timeframe}/${sortByKraken}/kraken`);
+      const rKr = await axios.get(host + `/table/${startDate}/${endDate}/${timeframe}/${sortByKraken}/kraken`);
       const dataKraken = await rKr.data;
       setDataKraken(dataKraken);
     } catch (error) {
