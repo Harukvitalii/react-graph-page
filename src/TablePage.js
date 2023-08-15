@@ -12,10 +12,6 @@ function TablePage() {
   const [sortBy, setSortBy] = useState("datetime");
 
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    fetchData();
-  };
 
 
   const fetchData = async () => {
@@ -31,7 +27,7 @@ function TablePage() {
 
   useEffect(() => {
     fetchData();
-  }, [startDate, endDate]);
+  }, [startDate, endDate, timeframe, sortBy]);
 
   if (dataTable === null) {
     return <div>Loading ^ ^ ...</div>;
@@ -39,7 +35,7 @@ function TablePage() {
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
+      <form >
         <label>
         ^ ^ Start Date: 
           <input
@@ -93,7 +89,6 @@ function TablePage() {
             <option value="diffWhiteKraken desc">DifferenceWhiteKraken desc</option>
           </select>
         </label>
-        <button type="submit"> LETS DO IT </button>
       </form>
       <div style={{ display: 'flex', justifyContent: 'center' }}>
       <div >
@@ -110,7 +105,7 @@ function TablePage() {
           <tbody>
             {dataTable.map((record, i) => (
               <tr key={i}>
-              <td style={{ border: '1px solid #000', padding: '0.5rem' }}>{record.datetime}</td>
+              <td style={{ border: '1px solid #000', padding: '0.5rem' }}>{new Date(record.datetime).toLocaleString('en-US', { timeZone: 'UTC' })}</td>
               <th style={{ border: '1px solid #000', padding: '0.5rem' }}>{record.whitebitPrice}$</th>
               <td style={{
                   border: '1px solid #000',
@@ -118,7 +113,7 @@ function TablePage() {
                   backgroundColor: record.diffWhiteBitstamp > record.diffWhiteKraken ? 'rgb(0, 255, 0, 0.3)' : 'rgb(239, 31, 31, 0.2)'
                 }}
               >
-                {`${record.bitstampPrice}$ (${record.diffWhiteBitstamp > 0 ? '+' : ''}${record.diffWhiteBitstamp})`}
+                {`${record.bitstampPrice}$ (${record.diffWhiteBitstamp > 0 ? '+' : ''}${record.diffWhiteBitstamp}%)`}
               </td>
               <td style={{
                   border: '1px solid #000',
@@ -126,7 +121,7 @@ function TablePage() {
                   backgroundColor: record.diffWhiteKraken > record.diffWhiteBitstamp ? 'rgb(0, 255, 0, 0.3)' : 'rgb(239, 31, 31, 0.2)'
                 }}
               >
-                {`${record.krakenPrice}$ (${record.diffWhiteKraken > 0 ? '+' : ''}${record.diffWhiteKraken})`}
+                {`${record.krakenPrice}$ (${record.diffWhiteKraken > 0 ? '+' : ''}${record.diffWhiteKraken}%)`}
               </td>
             </tr>
             ))}
