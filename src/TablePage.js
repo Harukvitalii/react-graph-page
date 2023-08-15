@@ -9,8 +9,7 @@ function TablePage() {
   const [startDate, setStartDate] = useState("2023-07-30T10:00:00.000Z");
   const [endDate, setEndDate] = useState("2023-07-31T10:00:00.000Z");
   const [timeframe, setTimeframe] = useState("30 mins");
-  const [sortBy, setSortBy] = useState("datetime");
-
+  const [sortBy, setSortBy] = useState("datetime asc");
 
 
 
