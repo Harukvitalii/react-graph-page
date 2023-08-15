@@ -5,13 +5,11 @@ import { host } from './localvars'
 console.log('host', host)
 
 function TablePage() {
-  const [dataBitstamp, setDataBitstamp] = useState(null);
-  const [dataKraken, setDataKraken] = useState(null);
+  const [dataTable, setDataTable] = useState(null);
   const [startDate, setStartDate] = useState("2023-07-30T10:00:00.000Z");
   const [endDate, setEndDate] = useState("2023-07-31T10:00:00.000Z");
   const [timeframe, setTimeframe] = useState("30 mins");
-  const [sortByBitstamp, setSortByBitstamp] = useState("datetime");
-  const [sortByKraken, setSortByKraken] = useState("datetime");
+  const [sortBy, setSortBy] = useState("datetime");
 
 
   const handleSubmit = (event) => {
@@ -22,12 +20,10 @@ function TablePage() {
 
   const fetchData = async () => {
     try {
-      const rBit = await axios.get(host + `/table/${startDate}/${endDate}/${timeframe}/${sortByBitstamp}/bitstamp`);
-      const dataBitstamp = await rBit.data;
-      setDataBitstamp(dataBitstamp);
-      const rKr = await axios.get(host + `/table/${startDate}/${endDate}/${timeframe}/${sortByKraken}/kraken`);
-      const dataKraken = await rKr.data;
-      setDataKraken(dataKraken);
+      const reqv = await axios.get(host + `/table/${startDate}/${endDate}/${timeframe}/${sortBy}`);
+      const dataTable = await reqv.data;
+      setDataTable(dataTable);
+
     } catch (error) {
       console.error(error);
     }
@@ -37,7 +33,7 @@ function TablePage() {
     fetchData();
   }, [startDate, endDate]);
 
-  if (dataBitstamp === null || dataKraken === null) {
+  if (dataTable === null) {
     return <div>Loading ^ ^ ...</div>;
   }
 
@@ -81,77 +77,58 @@ function TablePage() {
           </select>
         </label>
         <label>
-           Sort by Bitstamp:  
-          <select value={sortByBitstamp} onChange={event => setSortByBitstamp(event.target.value)}>
+           Sort Table by:  
+          <select value={sortBy} onChange={event => setSortBy(event.target.value)}>
             <option value="datetime asc">datetime asc</option>
             <option value="datetime desc">datetime desc</option>
             <option value="whitebitPrice asc">whitebit Price asc</option>
             <option value="whitebitPrice desc">whitebit Price desc</option>
-            <option value="toExchangePrice asc">Bitstamp Price asc</option>
-            <option value="toExchangePrice desc">Bitstamp Price desc</option>
-            <option value="difference asc">Difference asc</option>
-            <option value="difference desc">Difference desc</option>
-          </select>
-        </label>
-        <label>
-           Sort by Kraken:  
-          <select value={sortByKraken} onChange={event => setSortByKraken(event.target.value)}>
-            <option value="datetime asc">datetime asc</option>
-            <option value="datetime desc">datetime desc</option>
-            <option value="whitebitPrice asc">whitebit Price asc</option>
-            <option value="whitebitPrice desc">whitebit Price desc</option>
-            <option value="toExchangePrice asc">Kraken Price asc</option>
-            <option value="toExchangePrice desc">Kraken Price desc</option>
-            <option value="difference asc">Difference asc</option>
-            <option value="difference desc">Difference desc</option>
+            <option value="bitstampPrice asc">Bitstamp Price asc</option>
+            <option value="bitstampPrice desc">Bitstamp Price desc</option>
+            <option value="krakenPrice asc">Kraken Price asc</option>
+            <option value="krakenPrice desc">Kraken Price desc</option>
+            <option value="diffWhiteBitstamp asc">DifferenceWhiteBitstamp asc</option>
+            <option value="diffWhiteBitstamp desc">DifferenceWhiteBitstamp desc</option>
+            <option value="diffWhiteKraken asc">DifferenceWhiteKraken asc</option>
+            <option value="diffWhiteKraken desc">DifferenceWhiteKraken desc</option>
           </select>
         </label>
         <button type="submit"> LETS DO IT </button>
       </form>
-      <div style={{ display: 'flex' }}>
-      <div style={{ flex: 1 }}>
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
+      <div >
         {/* Left Table */}
-        <table>
+        <table style={{ borderCollapse: 'collapse' }}>
           <thead>
             <tr>
-              <th>Datetime </th>
-              <th>Whitebit Price </th>
-              <th>Bitstamp Price </th>
-              <th>Whitebit-Bitstamp Difference (%)</th>
+              <th style={{ padding: '0.5rem' }} >Datetime </th>
+              <th style={{ padding: '1.5rem' }} >Whitebit Price </th>
+              <th style={{ padding: '1.5rem' }} >Bitstamp Price </th>
+              <th style={{ padding: '1.5rem' }} >Kraken Price </th>
             </tr>
           </thead>
           <tbody>
-            {dataBitstamp.map((recordData, i) => (
+            {dataTable.map((record, i) => (
               <tr key={i}>
-                <th>{recordData.datetime}</th>
-                <td>{recordData.whitebitPrice}</td>
-                <td>{recordData.toExchangePrice}</td>
-                <td>{recordData.difference}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-
-      <div style={{ flex: 1 }}>
-        {/* Right Table */}
-        <table>
-          <thead>
-            <tr>
-              <th>Datetime </th>
-              <th>Whitebit Price </th>
-              <th>Kraken Price </th>
-              <th>Whitebit-Kraken Difference (%)</th>
+              <td style={{ border: '1px solid #000', padding: '0.5rem' }}>{record.datetime}</td>
+              <th style={{ border: '1px solid #000', padding: '0.5rem' }}>{record.whitebitPrice}$</th>
+              <td style={{
+                  border: '1px solid #000',
+                  padding: '0.5rem',
+                  backgroundColor: record.diffWhiteBitstamp > record.diffWhiteKraken ? 'rgb(0, 255, 0, 0.3)' : 'rgb(239, 31, 31, 0.2)'
+                }}
+              >
+                {`${record.bitstampPrice}$ (${record.diffWhiteBitstamp > 0 ? '+' : ''}${record.diffWhiteBitstamp})`}
+              </td>
+              <td style={{
+                  border: '1px solid #000',
+                  padding: '0.5rem',
+                  backgroundColor: record.diffWhiteKraken > record.diffWhiteBitstamp ? 'rgb(0, 255, 0, 0.3)' : 'rgb(239, 31, 31, 0.2)'
+                }}
+              >
+                {`${record.krakenPrice}$ (${record.diffWhiteKraken > 0 ? '+' : ''}${record.diffWhiteKraken})`}
+              </td>
             </tr>
-          </thead>
-          <tbody>
-            {dataKraken.map((recordData, i) => (
-              <tr key={i}>
-                <th>{recordData.datetime}</th>
-                <td>{recordData.whitebitPrice}</td>
-                <td>{recordData.toExchangePrice}</td>
-                <td>{recordData.difference}</td>
-              </tr>
             ))}
           </tbody>
         </table>
