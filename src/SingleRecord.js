@@ -57,7 +57,7 @@ function SingleRecordPage() {
           <thead>
           <tr key={1}>
             <td style={{ border: '1px solid #000', padding: '0.5rem' }}>
-              {new Date(dataTable.datetime).toLocaleString('en-US', { timeZone: 'UTC' })}
+              {new Date(dataTable.datetime).toLocaleString('en-US', { timeZone: 'Europe/Kiev' })}
             </td>
             <td style={{ 
               border: '1px solid #000', 
