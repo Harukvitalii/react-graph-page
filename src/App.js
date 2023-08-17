@@ -2,7 +2,7 @@ import react  from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import TablePage from './TablePage';
 import GraphPage from './GraphPage';
-
+import SingleRecordPage from './SingleRecord'
 
 
 function App() {
@@ -21,6 +21,9 @@ function App() {
             <li>
               <Link to="/graph">Graph</Link>
             </li>
+            <li>
+              <Link to="/singleRecord">Best Price Now</Link>
+            </li>
           </ul>
         </nav>
 
@@ -28,7 +31,7 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/table" element={<TablePage />} />
-          <Route path="/graph" element={<GraphPage />} />
+          <Route path="/singleRecord" element={<SingleRecordPage />} />
         </Routes>
       </div>
     </Router>
