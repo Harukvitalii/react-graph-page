@@ -39,12 +39,9 @@ function SingleRecordPage() {
   const minValue = Math.min(dataTable.whitebitPrice, dataTable.bitstampPrice, dataTable.krakenPrice);
   const maxValue = Math.max(dataTable.whitebitPrice, dataTable.bitstampPrice, dataTable.krakenPrice);
 
-  console.log(dataTable)
-  console.log(minValue, maxValue)
   // Calculate the middle value
-  const middleValue = parseFloat(dataTable.whitebitPrice) + parseFloat(dataTable.bitstampPrice) + parseFloat(dataTable.krakenPrice) - minValue - maxValue;
-
-  console.log(parseFloat(dataTable.krakenPrice), middleValue.toFixed(5))
+  const middleValueString = parseFloat(dataTable.whitebitPrice) + parseFloat(dataTable.bitstampPrice) + parseFloat(dataTable.krakenPrice) - minValue - maxValue;
+  const middleValue = parseFloat(middleValueString.toFixed(5));
   return (
     <div>
       <form >
@@ -62,21 +59,21 @@ function SingleRecordPage() {
             <td style={{ 
               border: '1px solid #000', 
               padding: '0.5rem',
-              backgroundColor: parseFloat(dataTable.whitebitPrice) === minValue ? 'rgb(239, 33, 33, 0.45)' : (parseFloat(dataTable.whitebitPrice) == middleValue.toFixed(5) ? 'rgb(239, 33, 33, 0.15)' : 'rgb(33, 239, 66, 0.5)')
+              backgroundColor: parseFloat(dataTable.whitebitPrice) === minValue ? 'rgb(239, 33, 33, 0.45)' : (parseFloat(dataTable.whitebitPrice) === middleValue ? 'rgb(239, 33, 33, 0.15)' : 'rgb(33, 239, 66, 0.5)')
             }}>
               {dataTable.whitebitPrice}$
             </td>
             <td style={{ 
               border: '1px solid #000', 
               padding: '0.5rem',
-              backgroundColor: parseFloat(dataTable.bitstampPrice) === minValue ? 'rgb(239, 33, 33, 0.45)' : (parseFloat(dataTable.bitstampPrice) == middleValue.toFixed(5) ? 'rgb(239, 33, 33, 0.15)' : 'rgb(33, 239, 66, 0.5)')
+              backgroundColor: parseFloat(dataTable.bitstampPrice) === minValue ? 'rgb(239, 33, 33, 0.45)' : (parseFloat(dataTable.bitstampPrice) === middleValue ? 'rgb(239, 33, 33, 0.15)' : 'rgb(33, 239, 66, 0.5)')
             }}>
               {`${dataTable.bitstampPrice}$ (${dataTable.diffWhiteBitstamp > 0 ? '+' : ''}${dataTable.diffWhiteBitstamp.slice(0,5)}%)`}
             </td>
             <td style={{ 
               border: '1px solid #000', 
               padding: '0.5rem',
-              backgroundColor: parseFloat(dataTable.krakenPrice) === minValue ? 'rgb(239, 33, 33, 0.45)' : (parseFloat(dataTable.krakenPrice) == middleValue.toFixed(5) ? 'rgb(239, 33, 33, 0.15)' : 'rgb(33, 239, 66, 0.5)')
+              backgroundColor: parseFloat(dataTable.krakenPrice) === minValue ? 'rgb(239, 33, 33, 0.45)' : (parseFloat(dataTable.krakenPrice) === middleValue ? 'rgb(239, 33, 33, 0.15)' : 'rgb(33, 239, 66, 0.5)')
             }}>
               {`${dataTable.krakenPrice}$ (${dataTable.diffWhiteKraken > 0 ? '+' : ''}${dataTable.diffWhiteKraken.slice(0,5)}%)`}
             </td>
