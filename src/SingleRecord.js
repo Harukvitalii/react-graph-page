@@ -44,14 +44,19 @@ function SingleRecordPage() {
   const middleValue = parseFloat(middleValueString.toFixed(5));
   return (
     <div>
-      <form >
-        
-      </form>
       <div style={{ display: 'flex', justifyContent: 'center' }}>
       <div >
         {/* Left Table */}
         <table style={{ borderCollapse: 'collapse' }}>
           <thead>
+            <tr>
+              <th style={{ padding: '0.85rem' }} >Datetime </th>
+              <th style={{ padding: '0.85rem' }} >Whitebit Price </th>
+              <th style={{ padding: '0.85rem' }} >Bitstamp Price </th>
+              <th style={{ padding: '0.85rem' }} >Kraken Price </th>
+            </tr>
+          </thead>
+          <tbody>
           <tr key={1}>
             <td style={{ border: '1px solid #000', padding: '0.5rem' }}>
               {new Date(dataTable.datetime).toLocaleString('en-US', { timeZone: 'Europe/Kiev' })}
@@ -78,7 +83,7 @@ function SingleRecordPage() {
               {`${dataTable.krakenPrice}$ (${dataTable.diffWhiteKraken > 0 ? '+' : ''}${dataTable.diffWhiteKraken.slice(0,5)}%)`}
             </td>
           </tr>
-         </thead>
+          </tbody>
         </table>
       </div>
     </div>
