@@ -104,7 +104,7 @@ function TablePage() {
           <tbody>
             {dataTable.map((record, i) => (
               <tr key={i}>
-              <td style={{ border: '1px solid #000', padding: '0.5rem' }}>{new Date(dataTable.datetime).toLocaleString('en-US', { timeZone: 'Europe/Kiev' })}</td>
+              <td style={{ border: '1px solid #000', padding: '0.5rem' }}>{new Date(record.datetime).toLocaleString('en-US', { timeZone: 'Europe/Kiev' })}</td>
               <th style={{ border: '1px solid #000', padding: '0.5rem' }}>{record.whitebitPrice}$</th>
               <td style={{
                   border: '1px solid #000',
