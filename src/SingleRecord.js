@@ -64,21 +64,21 @@ function SingleRecordPage() {
             <td style={{ 
               border: '1px solid #000', 
               padding: '0.5rem',
-              backgroundColor: parseFloat(dataTable.whitebitPrice) === minValue ? 'rgb(239, 33, 33, 0.45)' : (parseFloat(dataTable.whitebitPrice) === middleValue ? 'rgb(239, 33, 33, 0.15)' : 'rgb(33, 239, 66, 0.5)')
+              backgroundColor: parseFloat(dataTable.whitebitPrice) === minValue ? 'rgb(33, 239, 66, 0.5)' : (parseFloat(dataTable.whitebitPrice) === middleValue ? 'rgb(239, 33, 33, 0.15)' : 'rgb(239, 33, 33, 0.45)')
             }}>
               {dataTable.whitebitPrice}$
             </td>
             <td style={{ 
               border: '1px solid #000', 
               padding: '0.5rem',
-              backgroundColor: parseFloat(dataTable.bitstampPrice) === minValue ? 'rgb(239, 33, 33, 0.45)' : (parseFloat(dataTable.bitstampPrice) === middleValue ? 'rgb(239, 33, 33, 0.15)' : 'rgb(33, 239, 66, 0.5)')
+              backgroundColor: parseFloat(dataTable.bitstampPrice) === minValue ? 'rgb(33, 239, 66, 0.5)' : (parseFloat(dataTable.bitstampPrice) === middleValue ? 'rgb(239, 33, 33, 0.15)' : 'rgb(239, 33, 33, 0.45)')
             }}>
               {`${dataTable.bitstampPrice}$ (${dataTable.diffWhiteBitstamp > 0 ? '+' : ''}${dataTable.diffWhiteBitstamp.slice(0,5)}%)`}
             </td>
             <td style={{ 
               border: '1px solid #000', 
               padding: '0.5rem',
-              backgroundColor: parseFloat(dataTable.krakenPrice) === minValue ? 'rgb(239, 33, 33, 0.45)' : (parseFloat(dataTable.krakenPrice) === middleValue ? 'rgb(239, 33, 33, 0.15)' : 'rgb(33, 239, 66, 0.5)')
+              backgroundColor: parseFloat(dataTable.krakenPrice) === minValue ? 'rgb(33, 239, 66, 0.5)' : (parseFloat(dataTable.krakenPrice) === middleValue ? 'rgb(239, 33, 33, 0.15)' : 'rgb(239, 33, 33, 0.45)')
             }}>
               {`${dataTable.krakenPrice}$ (${dataTable.diffWhiteKraken > 0 ? '+' : ''}${dataTable.diffWhiteKraken.slice(0,5)}%)`}
             </td>

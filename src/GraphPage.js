@@ -63,14 +63,10 @@ export const options = {
 
 function GraphPage() {
   const [data, setData] = useState(null);
-  const [startDate, setStartDate] = useState("2023-07-30T10:00:00.000Z");
+  const [startDate, setStartDate] = useState("2023-08-01T10:00:00.000Z");
   const [endDate, setEndDate] = useState("2023-08-31T10:00:00.000Z");
-  const [timeframe, setTimeframe] = useState("5 min");
+  const [timeframe, setTimeframe] = useState("30 mins");
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    fetchData();
-  };
 
   const fetchData = async () => {
     try {
@@ -85,7 +81,8 @@ function GraphPage() {
 
   useEffect(() => {
     fetchData();
-  }, [startDate, endDate]);
+  }, [startDate, endDate, timeframe]);
+
 
   if (data === null) {
     return <div>Loading ^ ^ ...</div>;
@@ -93,7 +90,7 @@ function GraphPage() {
   console.log(data)
   const whitebitBitstampDifference = data.map(record => parseFloat(record.diffWhiteBitstamp).toFixed(5))
   const whitebitKrakenDifference   = data.map(record => parseFloat(record.diffWhiteKraken).toFixed(5))
-  const labels = data.map(record => record.datetime)
+  const labels = data.map(record => new Date(record.datetime).toLocaleString('en-US', { timeZone: 'Europe/Kiev' }))
   const whitebitWhitebitDifference = Array.from({ length: labels.length }, () => 0)
 
   const dataset = {
@@ -129,7 +126,7 @@ function GraphPage() {
   };
   return (
     <div>
-      <form onSubmit={handleSubmit}>
+      <form>
         <label>
         ^ ^ Start Date:
           <input
@@ -146,7 +143,6 @@ function GraphPage() {
             onChange={event => setEndDate(event.target.value)}
           />
         </label>
-        <button type="submit">Goo</button>
         <label>
           Timeframe:
           <select value={timeframe} onChange={event => setTimeframe(event.target.value)}>

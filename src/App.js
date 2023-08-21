@@ -31,6 +31,7 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/table" element={<TablePage />} />
+          <Route path="/graph" element={<GraphPage />} />
           <Route path="/singleRecord" element={<SingleRecordPage />} />
         </Routes>
       </div>
