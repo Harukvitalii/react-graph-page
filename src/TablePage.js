@@ -112,7 +112,7 @@ function TablePage() {
                   backgroundColor: record.diffWhiteBitstamp > record.diffWhiteKraken ? 'rgb(0, 255, 0, 0.3)' : 'rgb(239, 31, 31, 0.2)'
                 }}
               >
-                {`${record.bitstampPrice}$ (${record.diffWhiteBitstamp > 0 ? '+' : ''}${record.diffWhiteBitstamp}%)`}
+                {`${record.bitstampPrice}$ (${record.diffWhiteBitstamp > 0 ? '+' : ''}${record.diffWhiteBitstamp.slice(0,5)}%)`}
               </td>
               <td style={{
                   border: '1px solid #000',
@@ -120,7 +120,7 @@ function TablePage() {
                   backgroundColor: record.diffWhiteKraken > record.diffWhiteBitstamp ? 'rgb(0, 255, 0, 0.3)' : 'rgb(239, 31, 31, 0.2)'
                 }}
               >
-                {`${record.krakenPrice}$ (${record.diffWhiteKraken > 0 ? '+' : ''}${record.diffWhiteKraken}%)`}
+                {`${record.krakenPrice}$ (${record.diffWhiteKraken > 0 ? '+' : ''}${record.diffWhiteKraken.slice(0,5)}%)`}
               </td>
             </tr>
             ))}
