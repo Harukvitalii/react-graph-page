@@ -15,7 +15,7 @@ function TablePage() {
 
   const fetchData = async () => {
     try {
-      const reqv = await axios.get(host + `/table/${startDate}/${endDate}/${timeframe}/${sortBy}`);
+      const reqv = await axios.get(host + `/table/${startDate}/${endDate}/${timeframe}/${sortBy}/whitebit`);
       const dataTable = await reqv.data;
       setDataTable(dataTable);
 
@@ -31,11 +31,12 @@ function TablePage() {
   if (dataTable === null) {
     return <div>Loading ^ ^ ...</div>;
   }
+
   const worstPriceColor  = 'rgb(239, 33, 33, 0.45)'
   const bestPriceColor   = 'rgb(33, 239, 66, 0.5)'
   const middlePriceColor = 'rgb(239, 33, 33, 0.15)'
 
-  const dataTableColors = dataTable.map((record, i) => { 
+  const dataTableColors = dataTable.map((record) => { 
     const minValue = Math.min(record.whitebitPrice, record.bitstampPrice, record.krakenPrice);
     const maxValue = Math.max(record.whitebitPrice, record.bitstampPrice, record.krakenPrice);
   
@@ -136,7 +137,7 @@ function TablePage() {
                   backgroundColor: dataTableColors[i][1]
                 }}
               >
-                {`${record.bitstampPrice}$ (${record.diffWhiteBitstamp > 0 ? '+' : ''}${record.diffWhiteBitstamp.slice(0,5)}%)`}
+                {`${record.bitstampPrice}$ (${record.diffMainBitstamp > 0 ? '+' : ''}${record.diffMainBitstamp.slice(0,5)}%)`}
               </td>
               <td style={{
                   border: '1px solid #000',
@@ -144,7 +145,7 @@ function TablePage() {
                   backgroundColor: dataTableColors[i][2]
                 }}
               >
-                {`${record.krakenPrice}$ (${record.diffWhiteKraken > 0 ? '+' : ''}${record.diffWhiteKraken.slice(0,5)}%)`}
+                {`${record.krakenPrice}$ (${record.diffMainKraken > 0 ? '+' : ''}${record.diffMainKraken.slice(0,5)}%)`}
               </td>
             </tr>
             ))}

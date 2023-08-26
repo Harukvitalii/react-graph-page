@@ -11,7 +11,7 @@ function SingleRecordPage() {
 
   const fetchData = async () => {
     try {
-      const reqv = await axios.get(host + `/table/single`);
+      const reqv = await axios.get(host + `/table/single/whitebit`);
       const dataTable = await reqv.data;
       setDataTable(dataTable);
 
@@ -73,14 +73,14 @@ function SingleRecordPage() {
               padding: '0.5rem',
               backgroundColor: parseFloat(dataTable.bitstampPrice) === minValue ? 'rgb(33, 239, 66, 0.5)' : (parseFloat(dataTable.bitstampPrice) === middleValue ? 'rgb(239, 33, 33, 0.15)' : 'rgb(239, 33, 33, 0.45)')
             }}>
-              {`${dataTable.bitstampPrice}$ (${dataTable.diffWhiteBitstamp > 0 ? '+' : ''}${dataTable.diffWhiteBitstamp.slice(0,5)}%)`}
+              {`${dataTable.bitstampPrice}$ (${dataTable.diffMainBitstamp > 0 ? '+' : ''}${dataTable.diffMainBitstamp.slice(0,5)}%)`}
             </td>
             <td style={{ 
               border: '1px solid #000', 
               padding: '0.5rem',
               backgroundColor: parseFloat(dataTable.krakenPrice) === minValue ? 'rgb(33, 239, 66, 0.5)' : (parseFloat(dataTable.krakenPrice) === middleValue ? 'rgb(239, 33, 33, 0.15)' : 'rgb(239, 33, 33, 0.45)')
             }}>
-              {`${dataTable.krakenPrice}$ (${dataTable.diffWhiteKraken > 0 ? '+' : ''}${dataTable.diffWhiteKraken.slice(0,5)}%)`}
+              {`${dataTable.krakenPrice}$ (${dataTable.diffMainKraken > 0 ? '+' : ''}${dataTable.diffMainKraken.slice(0,5)}%)`}
             </td>
           </tr>
           </tbody>

@@ -66,11 +66,13 @@ function GraphPage() {
   const [startDate, setStartDate] = useState("2023-08-01T10:00:00.000Z");
   const [endDate, setEndDate] = useState("2023-08-31T10:00:00.000Z");
   const [timeframe, setTimeframe] = useState("30 mins");
+  const [mainExchange, setMainExchange] = useState("whitebit");
+
 
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(host + `/graph/${startDate}/${endDate}/${timeframe}`);
+      const response = await axios.get(host + `/graph/${startDate}/${endDate}/${timeframe}/${mainExchange}`);
       const data = await response.data;
       setData(data);
       console.log(typeof data, data);
@@ -81,24 +83,25 @@ function GraphPage() {
 
   useEffect(() => {
     fetchData();
-  }, [startDate, endDate, timeframe]);
+  }, [startDate, endDate, timeframe, mainExchange]);
 
 
   if (data === null) {
     return <div>Loading ^ ^ ...</div>;
   }
   console.log(data)
-  const whitebitBitstampDifference = data.map(record => parseFloat(record.diffWhiteBitstamp).toFixed(5))
-  const whitebitKrakenDifference   = data.map(record => parseFloat(record.diffWhiteKraken).toFixed(5))
+  const mainBitstampDifference = data.map(record => parseFloat(record.diffMainBitstamp).toFixed(5))
+  const mainKrakenDifference   = data.map(record => parseFloat(record.diffMainKraken).toFixed(5))
+  const mainWhitebitDifference = data.map(record => parseFloat(record.diffMainWhitebit).toFixed(5))
+  
   const labels = data.map(record => new Date(record.datetime).toLocaleString('en-US', { timeZone: 'Europe/Kiev' }))
-  const whitebitWhitebitDifference = Array.from({ length: labels.length }, () => 0)
 
   const dataset = {
     labels,
     datasets: [
       {
         label: 'WHITEBIT',
-        data: whitebitWhitebitDifference,
+        data: mainWhitebitDifference,
         borderColor: 'rgba(255, 255, 0, 0.5)',
         backgroundColor: 'rgba(255, 255, 0, 1)',
         borderWidth: 1.6,
@@ -106,7 +109,7 @@ function GraphPage() {
       },
       {
         label: 'BITSTAMP',
-        data: whitebitBitstampDifference,
+        data: mainBitstampDifference,
         borderColor: 'rgba(53, 235, 162, 0.5)',
         backgroundColor: 'rgba(53, 235, 162, 0.5)',
         borderWidth: 1,
@@ -115,7 +118,7 @@ function GraphPage() {
       },
       {
         label: 'KRAKEN',
-        data: whitebitKrakenDifference,
+        data: mainKrakenDifference,
         borderColor: 'rgb(53, 162, 235)',
         backgroundColor: 'rgba(53, 162, 235, 0.5)',
         borderWidth: 0.8,
@@ -160,6 +163,14 @@ function GraphPage() {
             <option value="1 day">1 day</option>
             <option value="2 days">2 days</option>
             
+          </select>
+        </label>
+        <label>
+        mainExchange:
+          <select value={mainExchange} onChange={event => setMainExchange(event.target.value)}>
+            <option value="whitebit">WHITEBIT</option>
+            <option value="bitstamp">BITSTAMP</option>
+            <option value="kraken">KRAKEN</option>
           </select>
         </label>
       </form>

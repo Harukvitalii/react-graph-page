@@ -4,7 +4,6 @@ import TablePage from './TablePage';
 import GraphPage from './GraphPage';
 import SingleRecordPage from './SingleRecord'
 
-
 function App() {
   return (
     <Router>
